@@ -678,5 +678,8 @@ $lang = array(
 
     // Types
     'true'                                         => 'True',
-    'false'                                        => 'False'
+    'false'                                        => 'False',
+
+    // Belgium Clients Listing
+    'total_for_vat_clients'                        => 'Total for VAT clients',
 );

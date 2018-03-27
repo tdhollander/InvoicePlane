@@ -32,7 +32,24 @@ class Reports extends Admin_Controller
                 'results' => $this->mdl_reports->sales_by_client($this->input->post('from_date'), $this->input->post('to_date')),
                 'from_date' => $this->input->post('from_date'),
                 'to_date' => $this->input->post('to_date'),
+                'total_sales' => 0,
+                'total_sales_with_taxes' => 0,
+                'total_number_invoices' => 0,
+                'total_sales_for_vat_clients' => 0,
+                'total_sales_with_taxes_for_vat_clients' => 0,
+                'total_number_invoices_for_vat_clients' => 0,
             );
+
+            foreach ($data['results'] as $result) {
+                if (!empty($result->client_vat_id)) {
+                    $data['total_sales_for_vat_clients'] += $result->sales;
+                    $data['total_sales_with_taxes_for_vat_clients'] += $result->sales_with_tax;
+                    $data['total_number_invoices_for_vat_clients'] += $result->invoice_count;
+                }
+                $data['total_sales'] += $result->sales;
+                $data['total_sales_with_taxes'] += $result->sales_with_tax;
+                $data['total_number_invoices'] += $result->invoice_count;
+            }
 
             $html = $this->load->view('reports/sales_by_client', $data, true);
 
